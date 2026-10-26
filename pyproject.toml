@@ -1,0 +1,62 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "asistente"
+version = "0.1.0"
+description = "Asistente personal inteligente vía Telegram (Fase 1 + 2: conversación y agenda)"
+requires-python = ">=3.12"
+dependencies = [
+    "aiohttp>=3.9",
+    "alembic>=1.13",
+    "apscheduler>=3.10,<4",
+    "argon2-cffi>=23.1",
+    "asyncpg>=0.29",
+    "fastapi>=0.140",
+    "openai>=1.40",
+    "pydantic>=2.7",
+    "pydantic-settings>=2.3",
+    "python-dotenv>=1.0",
+    "python-telegram-bot>=21.6,<23",
+    "sqlalchemy[asyncio]>=2.0",
+    "structlog>=24.1",
+    "tzdata>=2024",
+    "uvicorn>=0.30",
+]
+
+[project.optional-dependencies]
+dev = [
+    "mypy>=1.10",
+    "pytest>=8.2",
+    "pytest-asyncio>=0.23",
+    "ruff>=0.5",
+]
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.setuptools.package-data]
+asistente = ["py.typed"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+asyncio_mode = "auto"
+markers = [
+    "db: requiere PostgreSQL real (integración)",
+]
+
+[tool.ruff]
+line-length = 120
+target-version = "py312"
+src = ["src", "tests"]
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "UP", "B"]
+ignore = ["E501"]
+
+[tool.mypy]
+python_version = "3.12"
+warn_return_any = true
+warn_unused_configs = true
+ignore_missing_imports = true
